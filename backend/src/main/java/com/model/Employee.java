@@ -33,7 +33,7 @@ public class Employee {
     @Column
     private Date dateofBirth;
     @Column
-    private int lastDigit;
+    private int last4Ssn;
     @Column
     private String emailId;
     public long getId() {
@@ -54,11 +54,11 @@ public class Employee {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-   public int getLastDigit() {
-        return lastDigit;
+   public int getlast4Ssn() {
+        return last4Ssn;
     }
-    public void setLastDigit(int lastDigit) {
-        this.lastDigit = lastDigit;
+    public void setlast4Ssn(int last4Ssn) {
+        this.last4Ssn = last4Ssn;
     }
     public String getEmailId() {
         return emailId;
@@ -80,13 +80,13 @@ public class Employee {
     }
     public Employee(long id,
             @NotNull @Digits(integer = 5, fraction = 0, message = "ID must be a 5-digit number") long employeeId,
-            String firstName, String lastName, Date dateofBirth, int lastDigit, String emailId) {
+            String firstName, String lastName, Date dateofBirth, int last4Ssn, String emailId) {
         this.id = id;
         this.employeeId = employeeId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateofBirth = dateofBirth;
-        this.lastDigit = lastDigit;
+        this.last4Ssn = last4Ssn;
         this.emailId = emailId;
     }
   
