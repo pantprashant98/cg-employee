@@ -52,7 +52,7 @@ public class EmployeeServiceImpl  implements EmployeeService {
         e.setLastName(employee.getLastName());
         e.setDateofBirth(employee.getDateofBirth());
         e.setEmailId(employee.getEmailId());
-        e.setlast4Ssn(employee.getlast4Ssn());
+        e.setLast4Ssn(employee.getLast4Ssn());
         employeeRepository.save(e);
         
         
