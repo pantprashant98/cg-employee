@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EntityScan({ "com.model" })
 @EnableTransactionManagement
 public class Application {
-    public static void main(String[] args) {
+        public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
 
     }

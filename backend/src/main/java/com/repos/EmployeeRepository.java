@@ -8,7 +8,8 @@ import com.model.Employee;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long>{
 
-    Employee getByEmployeeId(Employee employeeId);
+    boolean existsByEmployeeId(Long employeeId);
+
 
 
 

@@ -1,6 +1,7 @@
 package com.model;
 
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -9,12 +10,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 
 
 @Entity
-@Table(name = "employee")
+@Table(name = "employee", uniqueConstraints = { @UniqueConstraint(columnNames = { "employeeId" }) })
 public class Employee {
 
     @Id
@@ -31,7 +33,7 @@ public class Employee {
     @Column
     private String lastName;
     @Column
-    private Date dateofBirth;
+    private LocalDate dateofBirth;
     @Column
     private int last4Ssn;
     @Column
@@ -66,10 +68,10 @@ public class Employee {
     public void setEmailId(String emailId) {
         this.emailId = emailId;
     }
-    public Date getDateofBirth() {
+    public LocalDate getDateofBirth() {
         return dateofBirth;
     }
-    public void setDateofBirth(Date dateofBirth) {
+    public void setDateofBirth(LocalDate dateofBirth) {
         this.dateofBirth = dateofBirth;
     }
     public long getEmployeeId() {
@@ -78,18 +80,18 @@ public class Employee {
     public void setEmployeeId(long employeeId) {
         this.employeeId = employeeId;
     }
-    public Employee(long id,
-            @NotNull @Digits(integer = 5, fraction = 0, message = "ID must be a 5-digit number") long employeeId,
-            String firstName, String lastName, Date dateofBirth, int last4Ssn, String emailId) {
-        this.id = id;
-        this.employeeId = employeeId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.dateofBirth = dateofBirth;
-        this.last4Ssn = last4Ssn;
-        this.emailId = emailId;
-    }
-  
+    // public Employee(long id,
+    //         @NotNull @Digits(integer = 5, fraction = 0, message = "ID must be a 5-digit number") long employeeId,
+    //         String firstName, String lastName, Date dateofBirth, int last4Ssn, String emailId) {
+    //     this.id = id;
+    //     this.employeeId = employeeId;
+    //     this.firstName = firstName;
+    //     this.lastName = lastName;
+    //     this.dateofBirth = dateofBirth;
+    //     this.last4Ssn = last4Ssn;
+    //     this.emailId = emailId;
+    // }
+    
 
     
 }

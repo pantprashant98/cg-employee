@@ -1,9 +1,12 @@
 package com.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.error.UserAlreadyExistsException;
 import com.model.Employee;
+import com.repos.EmployeeRepository;
 import com.service.EmployeeService;
 
 @RestController
@@ -26,30 +31,41 @@ import com.service.EmployeeService;
 @RequestMapping("/api/v1")
 public class EmployeeController {
 
+    private static final Logger logger = LoggerFactory.getLogger(EmployeeController.class);
+
+
     @Autowired
     private EmployeeService employeeService;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
     
-    @GetMapping("/employees")
-    public ResponseEntity<List<Employee>> getAllEmployees() {
-        List<Employee> employees = employeeService.getAll();
-        return ResponseEntity.ok(employees);
-    }
-    @PostMapping("/employees")
-    public ResponseEntity<Employee> createEmployee(@Valid @RequestBody Employee employee) {
-        employeeService.createEmployee(employee);
-        return ResponseEntity.status(HttpStatus.CREATED).body(employee);
+        @GetMapping("/employees")
+        public ResponseEntity<List<Employee>> getAllEmployees() {
+            return ResponseEntity.ok(employeeService.getAll());
+        }
+    // @PostMapping("/employees")
+    // public ResponseEntity<Employee> createEmployee(@Valid @RequestBody Employee employee) {
+    //     employeeService.createEmployee(employee);
+    //     return ResponseEntity.status(HttpStatus.CREATED).body(employee);
+    // }
+ @PostMapping("/employees")
+    public ResponseEntity<String> createEmployee(@RequestBody Employee employee) {
+        try {
+            employeeService.createEmployee(employee);
+            return new ResponseEntity<>("Employee created successfully.", HttpStatus.CREATED);
+        } catch (UserAlreadyExistsException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
+        }
     }
     @GetMapping("/employees/{id}")
-    public ResponseEntity<Employee> getEmployeeById(@PathVariable Long employeeId) {
-        Employee employee = employeeService.getById(employeeId);
-        if (employee != null) {
-            return ResponseEntity.ok(employee);
-        }
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<Optional<Employee>> getEmployeeById(@PathVariable(value="id") Long id) {
+        return ResponseEntity.ok(employeeService.getEmployee(id));
+
     }
     @PutMapping("/employees/{id}")
     public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee employee) {
-        employee.setId(id); // Ensure the ID is set correctly
+         
         employeeService.updateEmployee(employee);
         return ResponseEntity.ok(employee);
     }
