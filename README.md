@@ -13,7 +13,7 @@ This project is a Spring Boot microservice application that provides REST APIs f
 - **First Name**: String
 - **Last Name**:String
 - **Email Id**:: String
-- **Date of Birth**:-Date of Birth
+- **Date of Birth**:-Date
 -  **Last 4 SSN**:Last 4 digits of Social Security Number
 ## Technologies
 - **Backend**: Spring Boot
